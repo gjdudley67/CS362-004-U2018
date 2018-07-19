@@ -35,5 +35,46 @@ player: player.c interface.o
 
 all: playdom player 
 
+MyUnitTest1: MyUnitTest1.c dominion.o rngs.o
+	gcc -o MyUnitTest1 -g  MyUnitTest1.c dominion.o rngs.o $(CFLAGS)
+
+testUpdateCoins: testUpdateCoins.c dominion.o rngs.o
+	gcc -o testUpdateCoins -g  testUpdateCoins.c dominion.o rngs.o $(CFLAGS)
+
+AdventurerTest: cardtest1.c dominion.o rngs.o
+	gcc -o AdventurerTest -g  cardtest1.c dominion.o rngs.o $(CFLAGS)
+
+SmithyTest: cardtest2.c dominion.o rngs.o
+	gcc -o SmithyTest -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+
+VillageTest: cardtest3.c dominion.o rngs.o
+	gcc -o VillageTest -g  cardtest3.c dominion.o rngs.o $(CFLAGS)
+
+CouncilRoomTest: cardtest4.c dominion.o rngs.o
+	gcc -o CouncilRoomTest -g cardtest4.c dominion.o rngs.o $(CFLAGS)
+
+scoreForUnitTest: unittest1.c dominion.o rngs.o
+	gcc -o scoreForUnitTest -g unittest1.c dominion.o rngs.o $(CFLAGS)
+
+fullDeckCountUnitTest: unittest2.c dominion.o rngs.o
+	gcc -o fullDeckCountUnitTest -g unittest2.c dominion.o rngs.o $(CFLAGS)
+
+getCostUnitTest: unittest3.c dominion.o rngs.o
+	gcc -o getCostUnitTest -g unittest3.c dominion.o rngs.o $(CFLAGS)
+
+numHandCardsUnitTest: unittest4.c dominion.o rngs.o
+	gcc -o numHandCardsUnitTest -g unittest4.c dominion.o rngs.o $(CFLAGS)
+
+unittestresults: numHandCardsUnitTest getCostUnitTest fullDeckCountUnitTest scoreForUnitTest CouncilRoomTest VillageTest SmithyTest AdventurerTest dominion.o rngs.o
+	touch unittestresults.out
+	numHandCardsUnitTest >> unittestresults.out
+	getCostUnitTest >> unittestresults.out
+	fullDeckCountUnitTest >> unittestresults.out
+	scoreForUnitTest >> unittestresults.out
+	CouncilRoomTest >> unittestresults.out
+	VillageTest >> unittestresults.out
+	SmithyTest >> unittestresults.out
+	AdventurerTest >> unittestresults.out
+	gcov dominion.c -b >> unittestresults.out
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe MyUnitTest1 testUpdateCoins AdventurerTest SmithyTest VillageTest CouncilRoomTest scoreForUnitTest fullDeckCountUnitTest getCostUnitTest numHandCardsUnitTest
