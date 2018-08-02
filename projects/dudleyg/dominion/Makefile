@@ -65,6 +65,31 @@ getCostUnitTest: unittest3.c dominion.o rngs.o
 numHandCardsUnitTest: unittest4.c dominion.o rngs.o
 	gcc -o numHandCardsUnitTest -g unittest4.c dominion.o rngs.o $(CFLAGS)
 
+randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
+	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
+	touch randomtestadventurer.out
+	randomtestadventurer >> randomtestadventurer.out
+	gcov dominion.c -b >> randomtestadventurer.out
+
+randomtestsmithy: randomtestcard1.c dominion.o rngs.o
+	gcc -o randomtestsmithy -g randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+	touch randomtestcard1.out
+	randomtestsmithy >> randomtestcard1.out
+	gcov dominion.c -b >> randomtestcard1.out
+
+randomtestvillage: randomtestcard2.c dominion.o rngs.o
+	gcc -o randomtestvillage -g randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+	touch randomtestcard2.out
+	randomtestvillage >> randomtestcard2.out
+	gcov dominion.c -b >> randomtestcard2.out
+
+randomtestresults: randomtestadventurer randomtestsmithy randomtestvillage
+	touch randomtestresults.out
+	randomtestadventurer >> randomtestresults.out
+	randomtestsmithy >> randomtestresults.out
+	randomtestvillage >> randomtestresults.out
+	gcov dominion.c -b >> randomtestresults.out
+
 unittestresults: numHandCardsUnitTest getCostUnitTest fullDeckCountUnitTest scoreForUnitTest CouncilRoomTest VillageTest SmithyTest AdventurerTest dominion.o rngs.o
 	touch unittestresults.out
 	numHandCardsUnitTest >> unittestresults.out
@@ -76,5 +101,7 @@ unittestresults: numHandCardsUnitTest getCostUnitTest fullDeckCountUnitTest scor
 	SmithyTest >> unittestresults.out
 	AdventurerTest >> unittestresults.out
 	gcov dominion.c -b >> unittestresults.out
+
+
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe MyUnitTest1 testUpdateCoins AdventurerTest SmithyTest VillageTest CouncilRoomTest scoreForUnitTest fullDeckCountUnitTest getCostUnitTest numHandCardsUnitTest
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe MyUnitTest1 testUpdateCoins AdventurerTest SmithyTest VillageTest CouncilRoomTest scoreForUnitTest fullDeckCountUnitTest getCostUnitTest numHandCardsUnitTest randomtestadventurer randomtestsmithy randomtestvillage
